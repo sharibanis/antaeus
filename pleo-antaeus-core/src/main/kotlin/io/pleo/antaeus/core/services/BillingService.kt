@@ -17,15 +17,6 @@ import java.io.File
 /*
  BillingService will schedule payment of customer invoices on the first of the month. 
  */
-	// TODO - check date
-	// TODO - get customers list
-	// TODO - get invoice details
-	// TODO - charge customer account using PaymentProvider
-	// TODO - run scheduled thread 
-	// TODO - write pass/fail reports
-	// TODO - code cleanup
-	// TODO - commit
-
 class BillingService(
 	private val dal: AntaeusDal,
 	private val paymentProvider: PaymentProvider
