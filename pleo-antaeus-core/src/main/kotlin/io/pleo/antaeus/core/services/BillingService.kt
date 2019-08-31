@@ -31,25 +31,6 @@ class BillingService(
 	private val paymentProvider: PaymentProvider
 ) {
 	
- 	fun fetchCustomers(): List<Customer> {
-		var cl = dal.fetchCustomers()
-		for (c in cl)
-			logger.info(c.id.toString())
-		return cl	
-	}
- 
-	fun fetchInvoices(): List<Invoice> {
-		var il = dal.fetchInvoices()
-		for (i in il) {
-			logger.info(i.id.toString())
-			logger.info(i.customerId.toString())
-			logger.info(i.amount.value.toString())
-			logger.info(i.amount.currency.toString())
-			logger.info(i.status.toString())
-		}
-		return il	
-	}
-			
 		fun payInvoices(dayInt: Int, genReport: Boolean) {
 			try {
 				logger.info("Paying invoices...")
@@ -72,6 +53,7 @@ class BillingService(
 							if (paid) {
 								var msg1 = "Customer $customerId payment of $currency $value for invoice $invoiceId: SUCCESSFUL"
 								logger.info(msg1)
+								i.status = InvoiceStatus.PAID
 								paidSuccess.add(i)
 							} else {
 								var msg2 = "Customer $customerId payment of $currency $value for invoice $invoiceId: FAILED"
@@ -95,11 +77,21 @@ class BillingService(
 				val paidFailedFile = "paidFailedReport.txt"
 				val paidSuccessString = paidSuccess.toString()
 				val paidFailedString = paidFailed.toString()
-				logger.info("paidSuccessString: $paidSuccessString")
-				File(paidSuccessFile).printWriter().use { out -> out.println(paidSuccess.toString()) }
+				logger.debug("paidSuccessString: $paidSuccessString")
+				var record = ""
+				for (p in paidSuccess) {
+					record = record.plus(p.toString().plus("\n"))
+				}
+				logger.info(record)
+				File(paidSuccessFile).printWriter().use { out -> out.println(record) }
 				logger.info("Written $paidSuccessFile")
-				logger.info("paidFailedString: $paidFailedString")
-				File(paidFailedFile).printWriter().use { out -> out.println(paidFailed.toString()) }
+				logger.debug("paidFailedString: $paidFailedString")
+				record = ""
+				for (p in paidFailed) {
+					record = record.plus(p.toString().plus("\n"))
+				}
+				logger.info(record)
+				File(paidFailedFile).printWriter().use { out -> out.println(record) }
 				logger.info("Written $paidFailedFile")
 		    } catch (ex: Exception) {
 		        println(ex.message) 
@@ -115,8 +107,6 @@ class BillingService(
 	var logDate = logger.info("Today is: $today")
 	val dayInt = today.getDayOfMonth()
 	var logDayOfMonth = logger.info("DayOfMonth: $dayInt")
-	//var cl = fetchCustomers()
-	//var il = fetchInvoices()
 	val delay = 86400L
 	val genReport = true
 	val payInvoicesTask = object : Runnable {
