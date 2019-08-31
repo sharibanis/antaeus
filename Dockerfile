@@ -1,7 +1,10 @@
 FROM adoptopenjdk/openjdk11:latest
 
-RUN apt-get update && \
-    apt-get install -y sqlite3
+#RUN apt-get update && \
+#    apt-get install -y sqlite3
+
+#RUN yum update && \
+#    yum install -y sqlite3
 
 COPY . /anteus
 WORKDIR /anteus
