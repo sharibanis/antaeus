@@ -25,7 +25,6 @@ import java.io.File
 	// TODO - write pass/fail reports
 	// TODO - code cleanup
 	// TODO - commit
-	
 
 class BillingService(
 	private val dal: AntaeusDal,
