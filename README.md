@@ -84,4 +84,4 @@ Happy hacking 😁!
 1. Check today's date
 2. Charge customer account using PaymentProvider using a daily scheduled thread
 3. Write pass/fail reports
-4. Reports can be found as: sudo find /var/lib/docker/ -name "*Report.txt"
+4. Reports can be found as: ```sudo find /var/lib/docker/ -name "*Report.txt"```
