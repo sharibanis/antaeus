@@ -79,3 +79,8 @@ The code given is structured as follows. Feel free however to modify the structu
 * [Sqlite3](https://sqlite.org/index.html) - Database storage engine
 
 Happy hacking 😁!
+
+### Solution steps:
+1. Check today's date
+2. Charge customer account using PaymentProvider using a daily scheduled thread
+3. Write pass/fail reports
