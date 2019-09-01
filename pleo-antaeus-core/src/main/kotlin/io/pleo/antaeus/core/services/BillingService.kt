@@ -73,7 +73,7 @@ class BillingService(
 				for (p in paidSuccess) {
 					record = record.plus(p.toString().plus("\n"))
 				}
-				logger.info(record)
+				logger.debug(record)
 				File(paidSuccessFile).printWriter().use { out -> out.println(record) }
 				logger.info("Written $paidSuccessFile")
 				logger.debug("paidFailedString: $paidFailedString")
@@ -81,7 +81,7 @@ class BillingService(
 				for (p in paidFailed) {
 					record = record.plus(p.toString().plus("\n"))
 				}
-				logger.info(record)
+				logger.debug(record)
 				File(paidFailedFile).printWriter().use { out -> out.println(record) }
 				logger.info("Written $paidFailedFile")
 		    } catch (ex: Exception) {
