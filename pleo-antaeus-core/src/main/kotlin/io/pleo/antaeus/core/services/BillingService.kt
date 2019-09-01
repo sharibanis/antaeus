@@ -22,9 +22,14 @@ class BillingService(
 	private val paymentProvider: PaymentProvider
 ) {
 	
-		fun payInvoices(dayInt: Int, genReport: Boolean) {
+		fun payInvoices(genReport: Boolean) {
 			try {
 				logger.info("Paying invoices...")
+				var today = LocalDate.parse("2018-12-01")
+				//var today = LocalDate.now()
+				var logDate = logger.info("Today is: $today")
+				val dayInt = today.getDayOfMonth()
+				var logDayOfMonth = logger.info("DayOfMonth: $dayInt")
 				var paidSuccess = mutableListOf<Invoice>()
 				var paidFailed= mutableListOf<Invoice>() 
 				if(dayInt == 1) {
@@ -93,16 +98,11 @@ class BillingService(
 	init {
 		logger.info("BillingService initialized...")
 	}
-	var today = LocalDate.parse("2018-12-01")
-	//var today = LocalDate.now()
-	var logDate = logger.info("Today is: $today")
-	val dayInt = today.getDayOfMonth()
-	var logDayOfMonth = logger.info("DayOfMonth: $dayInt")
 	val delay = 86400L
 	val genReport = true
 	val payInvoicesTask = object : Runnable {
 		override fun run() {
-	        val payInvoice = payInvoices(dayInt, genReport)
+	        val payInvoice = payInvoices(genReport)
 		}
 	}
 	val singleThreadScheduledExecutor = Executors.newSingleThreadScheduledExecutor()
